@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+class Product {
+    String name;
+    double price;
+    int quantity;
+
+    // Default constructor
+    Product() {
+        name = "Unknown";
+        price = 0;
+        quantity = 0;
+    }
+
+    // Constructor with name and price
+    Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+        this.quantity = 1;  // default quantity
+    }
+
+    // Constructor with all details
+    Product(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    double getTotal() {
+        return price * quantity;
+    }
+}
+
+public class EcommerceOrder {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Predefined products using constructors
+        Product p1 = new Product("Laptop Bag", 1200, 1);
+        Product p2 = new Product("Wireless Mouse", 650); // quantity defaults to 1
+
+        System.out.println("=== E-COMMERCE ORDER SYSTEM ===");
+
+        // User inputs a new product
+        System.out.print("Enter product name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter product price: ");
+        double price = sc.nextDouble();
+
+        System.out.print("Enter quantity: ");
+        int qty = sc.nextInt();
+
+        // Product created by user
+        Product p3 = new Product(name, price, qty);
+
+        // Compute total
+        double subtotal = p1.getTotal() + p2.getTotal() + p3.getTotal();
+        double discount = 0;
+
+        // Apply discount policy
+        if (subtotal >= 3000 && subtotal < 5000) {
+            discount = subtotal * 0.10; // 10% discount
+        } else if (subtotal >= 5000) {
+            discount = subtotal * 0.20; // 20% discount
+        }
+
+        double grandTotal = subtotal - discount;
+
+        // Print detailed invoice
+        System.out.println("\n======= INVOICE =======");
+        System.out.println("Product\t\tPrice\tQty\tTotal");
+        System.out.println("----------------------------------------");
+        System.out.println(p1.name + "\t" + p1.price + "\t" + p1.quantity + "\t" + p1.getTotal());
+        System.out.println(p2.name + "\t" + p2.price + "\t" + p2.quantity + "\t" + p2.getTotal());
+        System.out.println(p3.name + "\t" + p3.price + "\t" + p3.quantity + "\t" + p3.getTotal());
+        System.out.println("----------------------------------------");
+
+        System.out.println("Subtotal:\t" + subtotal);
+        System.out.println("Discount:\t" + discount);
+        System.out.println("Grand Total:\t" + grandTotal);
+        System.out.println("===============================");
+
+        sc.close();
+    }
+}
